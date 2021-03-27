@@ -13,19 +13,13 @@ export default function Home() {
             <main className={styles.main}>
                 <h1 className={styles.title}>Welcome to Message App</h1>
 
-                <Link href={'/roomext'}>
+                <Link href={'/room'}>
                     <a className="block py-4 text-xl text-green-800">New Chat Room</a>
                 </Link>
             </main>
 
             <footer className={styles.footer}>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by Yunne Corp.
-                </a>
+                <div>Powered by Yunne Corp.</div>
             </footer>
         </div>
     );
