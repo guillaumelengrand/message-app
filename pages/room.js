@@ -68,14 +68,16 @@ export default function Room(props) {
 
     const MessageView = (
         <>
-            <div>
+            <div className="h-full">
                 <h1 className="text-center">Welcome to the Room</h1>
-                <div className="mx-2">
+                <div className="flex flex-col mx-2 overflow-y-auto h-screen-90">
                     {messages.map((msg, index) => (
-                        <div key={index}>
-                            <span>{displayDate(msg.id)} </span>
-                            <span className="capitalize">{msg.pseudo}: </span>
-                            <span>{msg.value}</span>
+                        <div key={index} className="">
+                            <div className="">
+                                <span>{displayDate(msg.id)} </span>
+                                <span className="capitalize">{msg.pseudo}: </span>
+                                <div>{msg.value}</div>
+                            </div>
                         </div>
                     ))}
                 </div>

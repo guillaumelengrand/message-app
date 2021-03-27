@@ -3,7 +3,9 @@ export default function UserList({users}) {
         <>
             <div>List User:</div>
             {users.map((user, index) => (
-                <div key={user.id}>{user.pseudo}</div>
+                <div key={user.id}>
+                    {user.pseudo} ({user.id})
+                </div>
             ))}
         </>
     );
