@@ -1,10 +1,16 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import useSocket from '@/hooks/useSocket';
 import UserSelection from '@/components/Room/user-selection';
 import UserList from '@/components/Room/user-list';
 import {displayDate} from '@/lib/date-handler';
+
+const AlwaysScrollToBottom = () => {
+    const elementRef = useRef();
+    useEffect(() => elementRef.current.scrollIntoView());
+    return <div ref={elementRef} />;
+};
 
 export default function Room(props) {
     const [pseudo, setPseudo] = useState('');
@@ -15,9 +21,6 @@ export default function Room(props) {
 
     // Value Enum: 'pseudo', 'message'
     const [view, setView] = useState('pseudo');
-    /*useSocket('message.chat1', message => {
-        setMessages(messages => [...messages, message]);
-    });*/
 
     const socket = useSocket('message.chat1', message => {
         setMessages(messages => [...messages, message]);
@@ -25,6 +28,10 @@ export default function Room(props) {
 
     useSocket('user.connect', users => {
         setUserList([...users]);
+    });
+    useSocket('pseudo.error', users => {
+        setView('pseudo');
+        setPseudo('');
     });
 
     useEffect(() => {
@@ -76,10 +83,11 @@ export default function Room(props) {
                             <div className="">
                                 <span>{displayDate(msg.id)} </span>
                                 <span className="capitalize">{msg.pseudo}: </span>
-                                <div>{msg.value}</div>
+                                <span>{msg.value}</span>
                             </div>
                         </div>
                     ))}
+                    <AlwaysScrollToBottom />
                 </div>
             </div>
             <div className="absolute bottom-0 w-full px-4 my-2">
@@ -108,7 +116,7 @@ export default function Room(props) {
                 <UserSelection sendPseudo={sendPseudo} />
             ) : (
                 <div className="flex flex-wrap">
-                    <div className="relative w-3/4 h-screen border-l border-r border-black">{MessageView}</div>
+                    <div className="relative w-3/4 h-screen border-l border-r border-low-white">{MessageView}</div>
                     <div className="w-1/4 px-2">
                         <UserList users={userList} />
                     </div>
