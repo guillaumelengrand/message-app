@@ -19,11 +19,13 @@ export default function Room(props) {
     const [newMessage, setNewMessage] = useState(0);
     const [messages, setMessages] = useState(props.messages || []);
 
+    console.log({roomName: props.roomId});
+
     // Value Enum: 'pseudo', 'message'
     const [view, setView] = useState('pseudo');
 
-    const socket = useSocket('message.chat1', message => {
-        setMessages(messages => [...messages, message]);
+    const socket = useSocket('message', message => {
+        if (message.room === 'chat1') setMessages(messages => [...messages, message]);
     });
 
     useSocket('user.connect', users => {
@@ -47,12 +49,14 @@ export default function Room(props) {
         // create message object
         const message = {
             id: new Date().getTime(),
+            channel: 'test',
+            room: 'chat1',
             pseudo: pseudo,
             value: field,
         };
 
         // send object to WS server
-        socket.emit('message.chat1', message);
+        socket.emit('message', message);
         setField('');
         setMessages(messages => [...messages, message]);
     };
@@ -91,19 +95,17 @@ export default function Room(props) {
                 </div>
                 <div className="h-[5vh]"></div>
             </div>
-            <div className="absolute bottom-0 w-full h-[5vh] border border-low-white">
-                <div className="flex flex-row gap-1 h-full">
-                    <input
-                        className="w-5/6 px-2 text-black border border-black"
-                        type="text"
-                        value={field}
-                        onChange={e => setField(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                    />
-                    <button className="w-1/6 px-2 border border-black" onClick={handleSubmit}>
-                        Send
-                    </button>
-                </div>
+            <div className="absolute bottom-0 w-full px-4 h-[5vh] border border-low-white">
+                <input
+                    className="w-5/6 px-2 text-black border border-black"
+                    type="text"
+                    value={field}
+                    onChange={e => setField(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+                <button className="w-1/6 px-2 border border-black" onClick={handleSubmit}>
+                    Send
+                </button>
             </div>
         </>
     );
@@ -118,7 +120,7 @@ export default function Room(props) {
             {view === 'pseudo' ? (
                 <UserSelection sendPseudo={sendPseudo} />
             ) : (
-                <div className="flex flex-row h-screen">
+                <div className="flex flex-row">
                     <div className="w-1/5 h-screen px-2">
                         <div>Channel List</div>
                     </div>
@@ -133,3 +135,12 @@ export default function Room(props) {
         </div>
     );
 }
+
+export const getServerSideProps = async context => {
+    const {roomName: roomId} = context.query;
+    return {
+        props: {
+            roomId,
+        },
+    };
+};

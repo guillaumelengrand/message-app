@@ -1,22 +1,24 @@
 {
-  "name": "next-tailwind-sample",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "10.0.9",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "socket.io": "^4.0.0",
-    "socket.io-client": "^4.0.0"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.2.5",
-    "postcss": "^8.2.8",
-    "tailwindcss": "^2.0.4"
-  }
+    "name": "message-app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "dependencies": {
+        "@prisma/client": "^3.13.0",
+        "next": "^12.1.5",
+        "react": "^18.1.0",
+        "react-dom": "^18.1.0",
+        "socket.io": "^4.0.0",
+        "socket.io-client": "^4.0.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.5",
+        "postcss": "^8.4.12",
+        "prisma": "^3.13.0",
+        "tailwindcss": "^3.0.24"
+    }
 }

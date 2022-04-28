@@ -11,7 +11,7 @@ export default function UserSelection({sendPseudo}) {
             <h1 className="">Welcome to the Room</h1>
             <div>Pseudo:</div>
             <input
-                className="w-full px-1 border border-black"
+                className="w-full px-1 border border-black text-black"
                 type="text"
                 value={newPseudo}
                 onChange={e => setNewPseudo(e.target.value)}
